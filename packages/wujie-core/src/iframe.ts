@@ -12,6 +12,7 @@ import {
   execHooks,
   getCurUrl,
   getAbsolutePath,
+  deepClone,
 } from "./utils";
 import {
   documentProxyProperties,
@@ -682,9 +683,12 @@ export function iframeGenerator(
   attrs: { [key: string]: any },
   mainHostPath: string,
   appHostPath: string,
-  appRoutePath: string
+  appRoutePath: string,
+  isBindWin: boolean = false
 ): HTMLIFrameElement {
-  console.log("debug iframeGenerator", JSON.stringify("sandbox"));
+  console.log("debug iframeGenerator1", sandbox);
+
+  // console.log("debug iframeGenerator2", JSON.stringify(sandbox));
   const iframe = window.document.createElement("iframe");
   const url = mainHostPath + appRoutePath;
   const attrsMerge = { src: mainHostPath, ...attrs, style: "display: none", name: sandbox.id, [WUJIE_DATA_FLAG]: "" };
@@ -698,5 +702,9 @@ export function iframeGenerator(
   patchIframeEvents(iframeWindow);
   if (iframeWindow.__WUJIE.degrade) recordEventListeners(iframeWindow);
   syncIframeUrlToWindow(iframeWindow);
+  debugger;
+  console.log("deepClone", sandbox.id, deepClone(iframe));
+  console.log("debug iframeGenerator4", iframe.contentWindow);
+  if (isBindWin) window[`__KLI__iframe__${sandbox.id}`] = iframe;
   return iframe;
 }

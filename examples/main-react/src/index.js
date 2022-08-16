@@ -40,16 +40,16 @@ if (window.localStorage.getItem("preload") !== "false") {
     plugins,
     ...lifecycles,
   });
-  preloadApp({
-    name: "react18",
-    url: hostMap("//localhost:3000/"),
-    attrs: isProduction ? {src: hostMap("//localhost:3000/")} : {},
-    exec: true,
-    alive: true,
-    fetch: credentialsFetch,
-    degrade,
-    ...lifecycles,
-  });
+  // preloadApp({
+  //   name: "react18",
+  //   url: hostMap("//localhost:3000/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:3000/")} : {},
+  //   exec: true,
+  //   alive: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   ...lifecycles,
+  // });
   // preloadApp({
   //   name: "react16",
   //   url: hostMap("//localhost:7600/"),

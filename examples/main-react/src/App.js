@@ -87,7 +87,7 @@ function Nav() {
       <NavLink to="/react18" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         react18
         <CaretUpOutlined
-          className={react16Flag ? "main-icon active" : "main-icon"}
+          className={react18Flag ? "main-icon active" : "main-icon"}
           onClick={() => handleFlag("react18")}
         />
       </NavLink>

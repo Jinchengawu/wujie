@@ -27,7 +27,7 @@ import {
   rawDocumentQuerySelector,
 } from "./common";
 import { EventBus, appEventObjMap, EventObj } from "./event";
-import { isFunction, wujieSupport, appRouteParse, requestIdleCallback, getAbsolutePath } from "./utils";
+import { isFunction, wujieSupport, appRouteParse, requestIdleCallback, getAbsolutePath, deepClone } from "./utils";
 import { WUJIE_DATA_ATTACH_CSS_FLAG } from "./constant";
 import { plugin, ScriptObjectLoader, loadErrorHandler } from "./index";
 
@@ -322,8 +322,10 @@ export default class Wujie {
    */
   public mount(): void {
     if (this.mountFlag) return;
-    if (isFunction(this.iframe.contentWindow.__WUJIE_MOUNT)) {
+    console.log("core-mount:this.iframe.contentWindow.__WUJIE_MOUNT", this.iframe.contentWindow.__WUJIE_MOUNT);
+    if (isFunction(this.iframe.contentWindow.__WUJIE_MOUNT || window[`__KLI__dthis__${this.id}`])) {
       this.lifecycles?.beforeMount?.(this.iframe.contentWindow);
+      debugger;
       this.iframe.contentWindow.__WUJIE_MOUNT();
       this.lifecycles?.afterMount?.(this.iframe.contentWindow);
       this.mountFlag = true;
@@ -468,10 +470,20 @@ export default class Wujie {
     // 创建目标地址的解析
     const { urlElement, appHostPath, appRoutePath } = appRouteParse(url);
     const { mainHostPath } = this.inject;
+    console.log("---------", (this as any).id, "-----------");
+    debugger;
+    console.log("klein-debugger1: this", this);
+    const __KLI__dthis__ = deepClone(this);
+    window[`__KLI__dthis__${this.id}`] = __KLI__dthis__;
+    console.log("klein-debugger2: deepClone", __KLI__dthis__, __KLI__dthis__ === this);
     // 创建iframe
-    const iframe = iframeGenerator(this, attrs, mainHostPath, appHostPath, appRoutePath);
+    const iframe = iframeGenerator(this, attrs, mainHostPath, appHostPath, appRoutePath, true);
     this.iframe = iframe;
+    // debugger
+    // console.log('klein-debugger (this as any).name', (this as any).name)
+    // if((this as any).name == 'id' ||(this as any).id == 'kleinB'){
 
+    // }
     if (this.degrade) {
       const { proxyDocument, proxyLocation } = localGenerator(iframe, urlElement, mainHostPath, appHostPath);
       this.proxyDocument = proxyDocument;

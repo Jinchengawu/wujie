@@ -5,6 +5,7 @@ import React16 from "./pages/React16";
 import React17 from "./pages/React17";
 import React18 from "./pages/React18";
 import Klein from "./pages/klein";
+import KleinB from "./pages/klein-build";
 import Vue2 from "./pages/Vue2";
 import Vue3 from "./pages/Vue3";
 import Vite from "./pages/Vite";
@@ -25,6 +26,7 @@ const subMap = {
 function Nav() {
   const location = useLocation();
   const [kleinFlag, setKleinFlag] = useState(location.pathname.includes("klein"));
+  const [kleinBFlag, setKleinBFlag] = useState(location.pathname.includes("kleinB"));
   const [react16Flag, setReact16Flag] = useState(location.pathname.includes("react16-sub"));
   const [react17Flag, setReact17Flag] = useState(location.pathname.includes("react7-sub"));
   const [react18Flag, setReact18Flag] = useState(location.pathname.includes("react18-sub"));
@@ -33,7 +35,11 @@ function Nav() {
   const [viteFlag, setViteFlag] = useState(location.pathname.includes("vite-sub"));
 
   const handleFlag = (name) => {
+    console.log('handleFlag:name', name)
     switch (name) {
+      case "kleinB":       
+        setKleinBFlag(!kleinBFlag);
+        break;      
       case "klein":
         setKleinFlag(!kleinFlag);
         break;
@@ -69,6 +75,13 @@ function Nav() {
         <CaretUpOutlined
           className={kleinFlag ? "main-icon active" : "main-icon"}
           onClick={() => handleFlag("klein")}
+        />
+      </NavLink>
+      <NavLink to="/kleinB" className={({ isActive }) => (isActive ? "active" : "inactive")}>
+        kleinBB
+        <CaretUpOutlined
+          className={kleinBFlag ? "main-icon active" : "main-icon"}
+          onClick={() => handleFlag("kleinB")}
         />
       </NavLink>
       <NavLink to="/react18" className={({ isActive }) => (isActive ? "active" : "inactive")}>
@@ -175,6 +188,8 @@ class App extends React.PureComponent {
               <Route exact path="/React18-sub/:path" element={<React18 />} />
               <Route exact path="/klein" element={<Klein />} />
               <Route exact path="/klein-sub/:path" element={<Klein />} />
+              <Route exact path="/kleinB" element={<KleinB />} />
+              <Route exact path="/kleinB-sub/:path" element={<KleinB />} />
               <Route exact path="/vue2" element={<Vue2 />} />
               <Route exact path="/vue2-sub/:path" element={<Vue2 />} />
               <Route exact path="/vue3" element={<Vue3 />} />

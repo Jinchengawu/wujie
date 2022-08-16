@@ -5,30 +5,30 @@ import WujieReact from "wujie-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import lifecycles from "../lifecycle";
 
-export default function Klein() {
+export default function KleinB() {
   console.log('process.env.NODE_ENV', process.env.NODE_ENV)
   const location = useLocation();
   const navigation = useNavigate();
-  const KleinUrl = hostMap("//localhost:3092/");
-  const path = location.pathname.replace("/klein-sub", "").replace("/klein", "");////
+  const KleinBUrl = hostMap("//localhost:8080/");
+  const path = location.pathname.replace("/kleinB-sub", "").replace("/kleinB", "");////
   // 告诉子应用要跳转哪个路由
   WujieReact.bus.$emit("klein-router-change", path);
   const degrade = window.localStorage.getItem("degrade") === "true";
   // 修正iframe的url，防止github pages csp报错
-  const attrs = process.env.NODE_ENV === "production" ? { src: KleinUrl } : {};
+  const attrs = process.env.NODE_ENV === "production" ? { src: KleinBUrl } : {};
   const props = {
     jump: (name) => {
       navigation(`/${name}`);
     },
   };
-  console.log('Klein111')
+  console.log('Klein-build')
   return (
     // 保活模式，name相同则复用一个子应用实例，改变url无效，必须采用通信的方式告知路由变化
     <WujieReact
       width="100%"
       height="100%"
       name="klein"
-      url={KleinUrl}
+      url={KleinBUrl}
       alive={true}
       sync={true}
       fetch={fetch}

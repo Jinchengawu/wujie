@@ -20,9 +20,21 @@ if (window.localStorage.getItem("preload") !== "false") {
   const degrade = window.localStorage.getItem("degrade") === "true" || !window.Proxy || !window.CustomElementRegistry;
   preloadApp({
     name: "klein",
-    url: hostMap("//localhost:3090/"),
-    attrs: isProduction ? {src: hostMap("//localhost:3090/")} : {},
+    url: hostMap("//localhost:3092/"),
+    attrs: isProduction ? {src: hostMap("//localhost:3092/")} : {},
     exec: true,
+    alive: true,
+    fetch: credentialsFetch,
+    degrade,
+    plugins,
+    ...lifecycles,
+  });
+  preloadApp({
+    name: "kleinB",
+    url: hostMap("//localhost:8080/"),
+    attrs: isProduction ? {src: hostMap("//localhost:8080/")} : {},
+    exec: true,
+    alive: true,
     fetch: credentialsFetch,
     degrade,
     plugins,
@@ -48,16 +60,16 @@ if (window.localStorage.getItem("preload") !== "false") {
   //   plugins,
   //   ...lifecycles,
   // });
-  preloadApp({
-    name: "react17",
-    url: hostMap("//localhost:7100/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7100/")} : {},
-    exec: true,
-    alive: true,
-    fetch: credentialsFetch,
-    degrade,
-    ...lifecycles,
-  });
+  // preloadApp({
+  //   name: "react17",
+  //   url: hostMap("//localhost:7100/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7100/")} : {},
+  //   exec: true,
+  //   alive: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   ...lifecycles,
+  // });
   // preloadApp({
   //   name: "vue2",
   //   url: hostMap("//localhost:7200/"),

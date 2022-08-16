@@ -19,15 +19,35 @@ bus.$on("click", (msg) => window.alert(msg));
 if (window.localStorage.getItem("preload") !== "false") {
   const degrade = window.localStorage.getItem("degrade") === "true" || !window.Proxy || !window.CustomElementRegistry;
   preloadApp({
-    name: "react16",
-    url: hostMap("//localhost:7600/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7600/")} : {},
+    name: "klein",
+    url: hostMap("//localhost:3090/"),
+    attrs: isProduction ? {src: hostMap("//localhost:3090/")} : {},
     exec: true,
     fetch: credentialsFetch,
     degrade,
     plugins,
     ...lifecycles,
   });
+  preloadApp({
+    name: "react18",
+    url: hostMap("//localhost:3000/"),
+    attrs: isProduction ? {src: hostMap("//localhost:3000/")} : {},
+    exec: true,
+    alive: true,
+    fetch: credentialsFetch,
+    degrade,
+    ...lifecycles,
+  });
+  // preloadApp({
+  //   name: "react16",
+  //   url: hostMap("//localhost:7600/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7600/")} : {},
+  //   exec: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   plugins,
+  //   ...lifecycles,
+  // });
   preloadApp({
     name: "react17",
     url: hostMap("//localhost:7100/"),
@@ -38,45 +58,45 @@ if (window.localStorage.getItem("preload") !== "false") {
     degrade,
     ...lifecycles,
   });
-  preloadApp({
-    name: "vue2",
-    url: hostMap("//localhost:7200/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7200/")} : {},
-    exec: true,
-    fetch: credentialsFetch,
-    degrade,
-    ...lifecycles,
-  });
-  preloadApp({
-    name: "vue3",
-    url: hostMap("//localhost:7300/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7300/")} : {},
-    exec: true,
-    alive: true,
-    // 引入了的第三方样式不需要添加credentials
-    fetch: (url, options) =>
-      url.includes(hostMap("//localhost:7300/")) ? credentialsFetch(url, options) : window.fetch(url, options),
-    degrade,
-    ...lifecycles,
-  });
-  preloadApp({
-    name: "angular12",
-    url: hostMap("//localhost:7400/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7400/")} : {},
-    exec: true,
-    fetch: credentialsFetch,
-    degrade,
-    ...lifecycles,
-  });
-  preloadApp({
-    name: "vite",
-    url: hostMap("//localhost:7500/"),
-    attrs: isProduction ? {src: hostMap("//localhost:7500/")} : {},
-    exec: true,
-    fetch: credentialsFetch,
-    degrade,
-    ...lifecycles,
-  });
+  // preloadApp({
+  //   name: "vue2",
+  //   url: hostMap("//localhost:7200/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7200/")} : {},
+  //   exec: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   ...lifecycles,
+  // });
+  // preloadApp({
+  //   name: "vue3",
+  //   url: hostMap("//localhost:7300/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7300/")} : {},
+  //   exec: true,
+  //   alive: true,
+  //   // 引入了的第三方样式不需要添加credentials
+  //   fetch: (url, options) =>
+  //     url.includes(hostMap("//localhost:7300/")) ? credentialsFetch(url, options) : window.fetch(url, options),
+  //   degrade,
+  //   ...lifecycles,
+  // });
+  // preloadApp({
+  //   name: "angular12",
+  //   url: hostMap("//localhost:7400/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7400/")} : {},
+  //   exec: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   ...lifecycles,
+  // });
+  // preloadApp({
+  //   name: "vite",
+  //   url: hostMap("//localhost:7500/"),
+  //   attrs: isProduction ? {src: hostMap("//localhost:7500/")} : {},
+  //   exec: true,
+  //   fetch: credentialsFetch,
+  //   degrade,
+  //   ...lifecycles,
+  // });
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

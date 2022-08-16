@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Home from "./pages/Home";
 import React16 from "./pages/React16";
 import React17 from "./pages/React17";
+import React18 from "./pages/React18";
+import Klein from "./pages/klein";
 import Vue2 from "./pages/Vue2";
 import Vue3 from "./pages/Vue3";
 import Vite from "./pages/Vite";
@@ -12,6 +14,7 @@ import Button from "antd/es/button";
 import { UnorderedListOutlined, CaretUpOutlined } from "@ant-design/icons";
 
 const subMap = {
+  klein: ["swap"],
   react16: ["home", "dialog", "location", "communication", "nest", "font"],
   react17: ["home", "dialog", "location", "communication", "state"],
   vue2: ["home", "dialog", "location", "communication"],
@@ -21,14 +24,22 @@ const subMap = {
 
 function Nav() {
   const location = useLocation();
+  const [kleinFlag, setKleinFlag] = useState(location.pathname.includes("klein"));
   const [react16Flag, setReact16Flag] = useState(location.pathname.includes("react16-sub"));
   const [react17Flag, setReact17Flag] = useState(location.pathname.includes("react7-sub"));
+  const [react18Flag, setReact18Flag] = useState(location.pathname.includes("react18-sub"));
   const [vue2Flag, setVue2Flag] = useState(location.pathname.includes("vue2-sub"));
   const [vue3Flag, setVue3Flag] = useState(location.pathname.includes("vue3-sub"));
   const [viteFlag, setViteFlag] = useState(location.pathname.includes("vite-sub"));
 
   const handleFlag = (name) => {
     switch (name) {
+      case "klein":
+        setKleinFlag(!kleinFlag);
+        break;
+      case "react16":
+        setReact18Flag(!react18Flag);
+        break;
       case "react16":
         setReact16Flag(!react16Flag);
         break;
@@ -52,6 +63,20 @@ function Nav() {
     <nav>
       <NavLink to="/home" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         介绍
+      </NavLink>
+      <NavLink to="/klein" className={({ isActive }) => (isActive ? "active" : "inactive")}>
+        klein
+        <CaretUpOutlined
+          className={kleinFlag ? "main-icon active" : "main-icon"}
+          onClick={() => handleFlag("klein")}
+        />
+      </NavLink>
+      <NavLink to="/react18" className={({ isActive }) => (isActive ? "active" : "inactive")}>
+        react18
+        <CaretUpOutlined
+          className={react16Flag ? "main-icon active" : "main-icon"}
+          onClick={() => handleFlag("react18")}
+        />
       </NavLink>
       <NavLink to="/react16" className={({ isActive }) => (isActive ? "active" : "inactive")}>
         react16
@@ -146,6 +171,10 @@ class App extends React.PureComponent {
               <Route exact path="/react16-sub/:path" element={<React16 />} />
               <Route exact path="/react17" element={<React17 />} />
               <Route exact path="/react17-sub/:path" element={<React17 />} />
+              <Route exact path="/React18" element={<React18 />} />
+              <Route exact path="/React18-sub/:path" element={<React18 />} />
+              <Route exact path="/klein" element={<Klein />} />
+              <Route exact path="/klein-sub/:path" element={<Klein />} />
               <Route exact path="/vue2" element={<Vue2 />} />
               <Route exact path="/vue2-sub/:path" element={<Vue2 />} />
               <Route exact path="/vue3" element={<Vue3 />} />

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { bus, preloadApp, startApp, destroyApp } from "wujie";
-
+console.log('-----wujie-react-dev-----111')
 export default class WujieReact extends React.PureComponent {
   static propTypes = {
     height: PropTypes.string,
@@ -38,7 +38,7 @@ export default class WujieReact extends React.PureComponent {
   destroy = null;
 
   startAppQueue = Promise.resolve();
-
+  console.log('-----wujie-react-dev-----222')
   execStartApp = () => {
     const {
       name,

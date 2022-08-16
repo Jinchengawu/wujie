@@ -684,6 +684,7 @@ export function iframeGenerator(
   appHostPath: string,
   appRoutePath: string
 ): HTMLIFrameElement {
+  console.log("debug iframeGenerator", JSON.stringify("sandbox"));
   const iframe = window.document.createElement("iframe");
   const url = mainHostPath + appRoutePath;
   const attrsMerge = { src: mainHostPath, ...attrs, style: "display: none", name: sandbox.id, [WUJIE_DATA_FLAG]: "" };
